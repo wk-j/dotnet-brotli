@@ -1,7 +1,0 @@
-source https://dotnet.myget.org/F/dotnet-corefxlab
-source https://www.nuget.org/api/v2
-
-framework:net45
-
-nuget System.IO.Compression.Brotli  0.1.0-e180119-3
-nuget System.IO.Compression
