@@ -14,16 +14,13 @@ type Startup private () =
         this.Configuration <- configuration
 
     member __.ConfigureServices(services: IServiceCollection) =
-
         services
-            // .AddResponseCompression(fun options ->
-            //     options.Providers.Add<BrotliCompressionProvider>()
-            //     options.MimeTypes <- ResponseCompressionDefaults.MimeTypes.Concat([| "image/svg+xml"; "application/javascript" |])
-            // )
-            .AddResponseCompression()
+            .AddResponseCompression(fun options ->
+                // options.Providers.Add<GzipCompressionProvider>()
+                options.Providers.Add<BrotliCompressionProvider>()
+                options.MimeTypes <- ResponseCompressionDefaults.MimeTypes.Concat([| "image/svg+xml"; "application/javascript" |])
+            )
             .AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1) |> ignore
-
-
 
     member __.Configure(app: IApplicationBuilder, env: IHostingEnvironment) =
         if (env.IsDevelopment()) then
@@ -35,7 +32,6 @@ type Startup private () =
             .UseStaticFiles()
             .UseMvc()
         |> ignore
-
         // app.UseHttpsRedirection() |> ignore
 
     member val Configuration : IConfiguration = null with get, set

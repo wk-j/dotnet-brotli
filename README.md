@@ -1,5 +1,8 @@
 ## Brotli Compression
 
+- [x] Chrome
+- [ ] Firefox
+
 ## Input
 
 - angular.min.js `155.19 KB`

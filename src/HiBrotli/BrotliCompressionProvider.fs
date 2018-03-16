@@ -8,5 +8,6 @@ type  BrotliCompressionProvider() =
         member __.EncodingName = "br"
         member __.SupportsFlush = true
         member __.CreateStream outputStream =
-            printfn "create stream ..."
-            upcast (new BrotliStream(outputStream, CompressionMode.Compress))
+            printfn "🚚  compress"
+            let stream = new BrotliStream(outputStream, CompressionMode.Compress)
+            upcast stream
