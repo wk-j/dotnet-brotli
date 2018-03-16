@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.0-preview1-final" />
+    <PackageReference Include="System.IO.Compression.Brotli" Version="0.1.0-e180119-3" />
   </ItemGroup>
 
 </Project>

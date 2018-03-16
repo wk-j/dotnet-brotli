@@ -11,5 +11,3 @@ using (var compressor = new BrotliStream(output, CompressionMode.Compress))
 {
     input.CopyTo(compressor);
 }
-
-
