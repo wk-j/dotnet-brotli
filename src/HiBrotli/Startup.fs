@@ -7,6 +7,9 @@ open Microsoft.AspNetCore.Mvc
 open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.AspNetCore.ResponseCompression
+open System.Threading.Tasks
+open System.Threading
+open Microsoft.AspNetCore.Http
 
 type Startup private () =
     new (configuration: IConfiguration) as this =
@@ -17,7 +20,7 @@ type Startup private () =
         services
             .AddResponseCompression(fun options ->
                 options.Providers.Add<BrotliCompressionProvider>()
-                options.Providers.Add<GzipCompressionProvider>()
+                // options.Providers.Add<GzipCompressionProvider>()
                 options.MimeTypes <- ResponseCompressionDefaults.MimeTypes.Concat([| "image/svg+xml"; "application/javascript" |])
             )
             .AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1) |> ignore
@@ -27,6 +30,17 @@ type Startup private () =
             app.UseDeveloperExceptionPage() |> ignore
         else
             app.UseHsts() |> ignore
+
+        let showHeaders (context: HttpContext) (next: System.Func<Task>): Task =
+            Task.Run(fun () ->
+                context.Request.Headers |> Seq.iter (fun x ->
+                    printfn " Header %A" x
+                )
+                next.Invoke()
+            )
+
+        let func = System.Func<HttpContext, System.Func<Task>, Task>(showHeaders)
+        app.Use(func) |> ignore
 
         app.UseResponseCompression()
             .UseStaticFiles()
