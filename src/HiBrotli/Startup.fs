@@ -20,7 +20,6 @@ type Startup private () =
         services
             .AddResponseCompression(fun options ->
                 options.Providers.Add<BrotliCompressionProvider>()
-                // options.Providers.Add<GzipCompressionProvider>()
                 options.MimeTypes <- ResponseCompressionDefaults.MimeTypes.Concat([| "image/svg+xml"; "application/javascript" |])
             )
             .AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1) |> ignore
@@ -31,7 +30,7 @@ type Startup private () =
         else
             app.UseHsts() |> ignore
 
-        let showHeaders (context: HttpContext) (next: System.Func<Task>): Task =
+        let showHeaders (context: HttpContext) (next: System.Func<Task>) =
             Task.Run(fun () ->
                 context.Request.Headers |> Seq.iter (fun x ->
                     printfn " Header %A" x
@@ -39,13 +38,10 @@ type Startup private () =
                 next.Invoke()
             )
 
-        let func = System.Func<HttpContext, System.Func<Task>, Task>(showHeaders)
-        app.Use(func) |> ignore
-
+        app.Use(showHeaders) |> ignore
         app.UseResponseCompression()
             .UseStaticFiles()
             .UseMvc()
         |> ignore
-        // app.UseHttpsRedirection() |> ignore
 
     member val Configuration : IConfiguration = null with get, set
