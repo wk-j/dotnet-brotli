@@ -16,8 +16,8 @@ type Startup private () =
     member __.ConfigureServices(services: IServiceCollection) =
         services
             .AddResponseCompression(fun options ->
-                // options.Providers.Add<GzipCompressionProvider>()
                 options.Providers.Add<BrotliCompressionProvider>()
+                options.Providers.Add<GzipCompressionProvider>()
                 options.MimeTypes <- ResponseCompressionDefaults.MimeTypes.Concat([| "image/svg+xml"; "application/javascript" |])
             )
             .AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1) |> ignore

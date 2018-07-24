@@ -1,0 +1,7 @@
+
+GET http://localhost:5000/index.html
+Accept-Encoding: gzip, deflate, br
+
+###
+GET http://localhost:5000/angular.min.js
+Accept-Encoding: gzip, deflate, br
