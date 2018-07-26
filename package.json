@@ -1,0 +1,28 @@
+{
+    "name": "dotnetbrotli",
+    "version": "1.0.0",
+    "description": "- [x] Chrome - [ ] Firefox",
+    "main": "index.js",
+    "scripts": {
+        "build": "parcel build client/index.html -d src/HiBrotli/wwwroot --public-url /",
+        "watch": "parcel watch client/index.html -d src/HiBrotli/wwwroot --public-url /"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/wk-j/dotnet-brotli.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/wk-j/dotnet-brotli/issues"
+    },
+    "homepage": "https://github.com/wk-j/dotnet-brotli#readme",
+    "devDependencies": {
+        "@types/react": "^16.4.7",
+        "@types/react-dom": "^16.0.6",
+        "react": "^16.4.1",
+        "react-dom": "^16.4.1",
+        "semantic-ui-css": "^2.3.3",
+        "typescript": "^2.9.2"
+    }
+}
